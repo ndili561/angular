@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var urlGet = Url.Action("Get","Contact",null,this.Url.ActionContext.HttpContext.Request.Scheme);
+    var urlAdd = Url.Action("Add", "Contact", null, this.Url.ActionContext.HttpContext.Request.Scheme);
+    var urlEdit = Url.Action("Update", "Contact", null, this.Url.ActionContext.HttpContext.Request.Scheme);
+    var urlDelete = Url.Action("Delete", "Contact", null, this.Url.ActionContext.HttpContext.Request.Scheme);
+}
+
+<div class="row" ng-controller="ContactController" ng-cloak>
+    <h2>Contacts</h2>
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="email">Name:</label>
+                <input type="text" class="form-control" id="name" ng-model="name">
+            </div>
+            <div class="form-group">
+                <label for="Phone">Phone:</label>
+                <input type="tel" class="form-control" id="phone" ng-model="phone">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Email:</label>
+                <input type="email" class="form-control" id="email" ng-model="email">
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="contactid" ng-model="contactId">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addContact('@urlAdd')">Save</button>
+            <button type="button" class="btn btn-success" ng-click="editContact('@urlEdit')">Update</button>
+            <button type="reset" class="btn btn-default">Clear</button>
+        </form>
+    </div>
+    <div class="col-md-8" ng-init="init('@urlGet')">
+        <div class="table-responsive">
+            <table ng-table="tableParams" class="table table-hover "  show-filter="true">
+
+                <tr ng-repeat="item in $data">
+                    <td title="'ContactId'" sortable="'ContactId'">{{item.contactId}}</td>
+                    <td title="'Name'" sortable="'name'" filter="{name:'text'}">{{item.name}}</td>
+                    <td title="'Phone'" sortable="'phone'" filter="{phone:'text'}">{{item.phone}}</td>
+                    <td title="'Email'" sortable="'email'" filter="{email:'text'}">{{item.email}}</td>
+                    <td>
+                        <button type="button" ng-click="fillFields(item)">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" ng-click="deleteContact('@urlDelete',item)">Delete</button>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts
+    {
+    <script src="~/js/Angular/Controllers/ContactController.js"></script>
+}

@@ -1,0 +1,1 @@
+﻿var app = angular.module('App',['ngStorage','ngTable', 'chart.js', 'ngMessages']);
